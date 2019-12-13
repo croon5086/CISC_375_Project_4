@@ -12,7 +12,6 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
             <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 			<script type="application/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			<script src="http://open.mapquestapi.com/nominatim/v1/search.php"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 			<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
 			
@@ -37,26 +36,7 @@
 			font-size: 20px;
 		}
 		</style>
-		<script type="text/javascript">
-		console.log("herer!");				
-			var app = new Vue({
-		    el: ‘#app’,
-		    data: {
-		      visibleNeighborhoods
-		    },
-		    computed: {
-		      visibleCrimes: function() {
-		        return this.crime.filter(function(u) {
-		        	for(int i=0; i<visibleNeighborhoods; i++)
-		        	{
-		        		if("N"+crime.neighborhood_number == visibleNeighborhoods[i])
-		        			return u.visibleNeighborhoods[i].name
-		          	}
-		      })
-		    }
-		  }
-		 });
-		</script>
+
         <body onload="Init()">
        
 		
@@ -99,9 +79,8 @@
 						<th>Block</th>
 					</tr>
 				</thead>
-				<!--visibleNeighborhoods["N" + crime.neighborhood_number]-->
 				<tbody>
-					<tr v-for=crime in visibleCrimes>
+					<tr v-for="(crime,key) in visibleCrimes" && v-for="(neighb,key2) in visibleNeighborhoods" && v-if="'N'+crime.neighborhood_number==neighb">
 						<td>{{ key.substring(1) }}</td>
 						<td>{{ crime.date + " " +crime.time }}</td>
 						<td>{{ crime.incident }}</td>
@@ -234,17 +213,18 @@
                 function zoomTo(lat,lng) {map.panTo(new L.LatLng(lat, lng));}
 				
 				function Init() {
-					visibility = new Vue({
+					 visibility = new Vue({
 						el: '#app',
 						data: {
 							visibleNeighborhoods: {},
-							visibleCrimes: {}
+							visibleCrimes: {},
+							//visibleOnMap: {}
 						}
 					});
 					getNeighborhoodData();
 					getCrimeData();
-					
-				}
+					//getMapCrimes();			
+				}//Init
 
 				function getNeighborhoodData() {
 					$.getJSON('http://localhost:8000/neighborhoods',
@@ -258,6 +238,23 @@
 					function(obj){visibility.visibleCrimes = obj[0];});					
 				}
 
+				/*function getMapCrimes() {
+					visibility.visibleOnMap = [];
+					currentLocations = [];
+					
+					for(key in visibility.visibleCrimes)
+					{console.log("hello");
+						for(key2 in visibility.visibleNeighborhoods)
+						{
+							if (visibility.visibleCrimes[key].neighborhood_number == "N"+key2)
+					    	{
+					    		currentLocations.push(visibility.visibleCrimes[key]);
+					    	};
+						}
+					}
+					visibility.visibleOnMap = currentLocations;
+				}*/
+				
 				function updateVisibleLocations() {
 					
 					visibility.visibleNeighborhoods = [];
