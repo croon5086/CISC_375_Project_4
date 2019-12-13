@@ -7,6 +7,8 @@ var express = require('express');
 var sqlite3 = require('sqlite3');
 var js2xmlparser = require("js2xmlparser");
 
+var cors = require('cors');
+
 
 var template_dir = path.join(__dirname, 'docs');
 var public_dir = path.join(__dirname, 'public');
@@ -26,7 +28,7 @@ var db = new sqlite3.Database(db_filename, sqlite3.OPEN_READWRITE, (err) => {
 });
 
 app.use(bodyParser.urlencoded({encoded: true}));
-
+app.use(cors());
 
 function getCrimeTable(visibleNeighborhoods){
     return new Promise((resolve, reject) => {
