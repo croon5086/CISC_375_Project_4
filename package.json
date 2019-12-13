@@ -1,0 +1,29 @@
+{
+    "name": "restful-webserver",
+    "version": "0.0.1",
+    "description": "REST-ful Web Server using Node JS",
+    "author": {
+        "name": "Charlie Rooney",
+        "email": "roon5086@stthomas.edu"
+    },
+    "contributors": [
+        {
+            "name": "Andrew Bates",
+            "email": "bate2807@stthomas.edu"
+        },
+        {
+            "name": "Charlie Rooney",
+            "email": "roon5086@stthomas.edu"
+        }
+    ],
+    "main": "server.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/croon5086/CISC_375_Project_3"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "js2xmlparser": "^4.0.0",
+        "sqlite3": "^4.1.0"
+    }
+}

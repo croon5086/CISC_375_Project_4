@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Leaflet Web Map</title>
+			<!--link rel="stylesheet" href="style.css"-->
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+            <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+			<script type="application/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+			<script src="http://open.mapquestapi.com/nominatim/v1/search.php"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+			
+            <style>
+                #map {
+                    width: 900px;
+                    height:500px;
+                }
+            </style>
+        </head>
+		<style>
+		.number-icon{
+			width: 65px !important;
+			height: 40px !important;
+			margin-left: -12px;
+			margin-top: -12px;
+			border-radius: 18px;
+			border: 5px solid #3F51B5;
+			text-align: center;
+			color: #3F51B5;
+			background-color: #fff;
+			font-size: 20px;
+		}
+		</style>
+		<script type="text/javascript">
+		console.log("herer!");				
+			var app = new Vue({
+		    el: ‘#app’,
+		    data: {
+		      visibleNeighborhoods
+		    },
+		    computed: {
+		      visibleCrimes: function() {
+		        return this.crime.filter(function(u) {
+		        	for(int i=0; i<visibleNeighborhoods; i++)
+		        	{
+		        		if("N"+crime.neighborhood_number == visibleNeighborhoods[i])
+		        			return u.visibleNeighborhoods[i].name
+		          	}
+		      })
+		    }
+		  }
+		 });
+		</script>
+        <body onload="Init()">
+       
+		
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about">About Us</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="container">
+			<div class="col-md-12">
+			<div id="map"></div>
+            <br/>
+            Search: <input type="text" name="Location" id="txtLocation" value="" style="width:750px;">
+            <br>
+            <input type="radio" name="locType" value="address" checked> Address &nbsp
+			<input type="radio" name="locType" value="latlong"> Latitude/Longitude<br>
+            <p id="location"></p>
+			<br>
+			<p id="testLocation"></p>
+			
+			<br>
+			<div id="app">
+				<ul>
+					<option v-for="hood in visibleNeighborhoods">{{ hood}}</option>
+				</ul>
+				<br>
+			<table>
+				<thead>
+					<tr>
+						<th>Case Number</th>
+						<th>Date and Time</th>
+						<th>Incident Type</th>
+						<th>Police Grid</th>
+						<th>Neighborhood</th>
+						<th>Block</th>
+					</tr>
+				</thead>
+				<!--visibleNeighborhoods["N" + crime.neighborhood_number]-->
+				<tbody>
+					<tr v-for=crime in visibleCrimes>
+						<td>{{ key.substring(1) }}</td>
+						<td>{{ crime.date + " " +crime.time }}</td>
+						<td>{{ crime.incident }}</td>
+						<td>{{ crime.police_grid }}</td>
+						<td>{{ crime.neighborhood_number }}</td>
+						<td>{{ crime.block }}</td>
+					</tr>
+				</tbody>
+			</table>
+				
+			<!-- here and up -->
+				
+			</div>
+			<br>
+			<div id="checkboxes">
+			  <label>Neighborhoods</label>
+			  <ul>
+				<li><input type="checkbox">Conway/Battlecreek/Highwood</li>
+				<li><input type="checkbox">Greater East Side</li>
+				<li><input type="checkbox">West Side</li>
+				<li><input type="checkbox">Dayton's Bluff</li>
+			  </ul>
+			</div>
+			<br>
+			<div id="checkboxes">
+			  <label>Incident Type</label>
+			  <ul>
+				<li><input type="checkbox">Proactive Police Visit</li>
+				<li><input type="checkbox">Vandalism</li>
+				<li><input type="checkbox">Discharge</li>
+				<li><input type="checkbox">Auto Theft</li>
+			  </ul>
+			</div>
+			<br>
+            <script type="text/javascript">
+                //Creating the map: centering it and setting the initial zoom level
+                var map = L.map('map',{ center: [44.9537, -93.0900], zoom: 12 });
+                
+                //Setting the maps panning boundries
+                var southWest = L.latLng(44.884284, -93.213769);
+                var northEast = L.latLng(44.993547, -93.004264);
+                var bounds = L.latLngBounds(southWest, northEast);
+                map.setMaxBounds(bounds)
+
+                //adds the actual 'map' to the map variable and sets the min and max zoom
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', 
+                {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                    maxZoom:18,
+                    minZoom: 12
+                }).addTo(map);
+				
+                //updates center coordinates if stopped zooming
+                map.on('zoomend', function() {
+                    updateCenterCoordinates();
+					updateVisibleLocations();
+                });
+
+                //updates center coordinates if stopped panning
+                map.on('moveend', function() {
+                    updateCenterCoordinates();
+					updateVisibleLocations();
+                });
+
+				//Gets the coordinates of the center of the map, Rounds to the the-thousandths and calls another function to add the text to the location request textbox.
+                function updateCenterCoordinates()
+                {
+                    var currCenter = map.getCenter();					
+                    //getlocation(currCenter.lat + ","+ currCenter.lng);
+                    //check for type of output.... button.... here.
+                    document.getElementById("txtLocation").value = "(" + currCenter.lat + "," + currCenter.lng +")";
+                }
+
+                //Event Listner: Enter button press for location search.
+				document.getElementById("txtLocation").onkeypress = function(event)
+				{
+					 if (event.keyCode == 13 || event.which == 13)
+					 {
+						//getlocation(document.getElementById("txtLocation").value);
+					 }
+				}
+
+				function getlocation(name)
+				{
+                    $.getJSON('https://nominatim.openstreetmap.org/search.php?q=' + name + "&format=json",
+                    function(obj)
+                    {
+					
+						if(obj[0]!=undefined)
+						{
+                        //var topResponse = JSON.parse(obj[0]);
+							var looking = true;
+							let i = 0;
+							while(looking && i < obj.length)
+							{
+								var latitude = obj[i].lat;
+								var longitude = obj[i].lon;
+								var place = obj[i].display_name;
+								var latANDLong = latitude + "," + longitude;
+								
+								document.getElementById("location").innerHTML = JSON.stringify(place);
+								var stpaul_boundingbox = [44.8872811,44.992016,-93.207787,-93.00432];
+								
+								var bounding = obj[i].boundingbox;
+								if (latitude >= stpaul_boundingbox[0] && latitude <= stpaul_boundingbox[1] && longitude >= stpaul_boundingbox[2] && longitude <= stpaul_boundingbox[3] && looking) {
+									zoomTo(latitude,longitude);
+									updateVisibleLocations(latitude,longitude);
+									document.getElementById("txtLocation").value = currLat + "," + currLng;
+									document.getElementById("location").innerHTML = place;
+									looking = false;
+									
+								}
+								i++;
+								//Radio button Option
+							}
+							if(!looking) 
+							{
+								document.getElementById("txtLocation").value = "Location not found on map";
+							}
+						}
+						else
+						{
+							document.getElementById("txtLocation").value = "";
+						}
+                    });
+                    //jquery for search
+                }
+
+                //Takes map to the lat and longitude of the location desired.
+                function zoomTo(lat,lng) {map.panTo(new L.LatLng(lat, lng));}
+				
+				function Init() {
+					visibility = new Vue({
+						el: '#app',
+						data: {
+							visibleNeighborhoods: {},
+							visibleCrimes: {}
+						}
+					});
+					getNeighborhoodData();
+					getCrimeData();
+					
+				}
+
+				function getNeighborhoodData() {
+					$.getJSON('http://localhost:8000/neighborhoods',
+						function(obj){visibility.visibleNeighborhoods = obj[0];});
+				}
+				
+				function getCrimeData() {
+					var start = "2019-10-01";
+					var end = "2019-10-02";
+					$.getJSON('http://localhost:8000/incidents?start_date=' + start + '&end_date=' + end,
+					function(obj){visibility.visibleCrimes = obj[0];});					
+				}
+
+				function updateVisibleLocations() {
+					
+					visibility.visibleNeighborhoods = [];
+					var mapBounds = map.getBounds();
+					var numMarkers = 0;
+					var currentLocations = [];
+					
+					for(let i = 0; i < markers.length; i++) {
+						if(mapBounds.contains(markers[i].getLatLng())) {
+							
+							currentLocations.push(markers[i].options.icon.options.name);
+							numMarkers++;
+						}
+					}
+					visibility.visibleNeighborhoods = currentLocations;
+				}
+
+				var crime_counts = !!!CRIME_COUNTS!!!;
+
+				//Below here is stuff for markers
+
+				var conway_marker = L.marker([44.921577, -93.030639], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Conway/Battlecreek/Highwood"
+					})
+				});
+				
+				var eastside_marker = L.marker([44.977473, -93.025671], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Greater East Side"
+					})
+				});
+				var westside_marker = L.marker([44.933460, -93.080164], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "West Side"
+					})
+				});
+				var dayton_marker = L.marker([44.958591, -93.058473], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Dayton's Bluff"
+					})
+				});
+				
+				var payne_marker = L.marker([44.976641, -93.066103], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Payne/Phalen"
+					})
+				});
+				var northend_marker = L.marker([44.977122, -93.105888], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "North End"
+					})
+				});
+				var frogtown_marker = L.marker([44.959952, -93.118672], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Thomas/Dale(Frogtown)"
+					})
+				});
+				var summituniversity_marker = L.marker([44.948338, -93.126295], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Summit/University"
+					})
+				});
+				var westseventh_marker = L.marker([44.926904, -93.127954], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "West Seventh"
+					})
+				});
+				var como_marker = L.marker([44.979157, -93.146152], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Como"
+					})
+				});
+				var midway_marker = L.marker([44.951729, -93.167039], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Hamline/Midway"
+					})
+				});
+				var stanthony_marker = L.marker([44.970715, -93.193814], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "St. Anthony"
+					})
+				});
+				var unionpark_marker = L.marker([44.948424, -93.177081], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Union Park"
+					})
+				});
+				var macalester_marker = L.marker([44.934318, -93.172108], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Macalester-Groveland"
+					})
+				});
+				var highland_marker = L.marker([44.912484, -93.169759], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Highland"
+					})
+				});
+				var summithill_marker = L.marker([44.937791, -93.133847], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Summit Hill"
+					})
+				});
+				var capitol_marker = L.marker([44.953341, -93.102230], {
+					icon: L.divIcon({
+						className: 'number-icon',
+						html: "",
+						name: "Capitol River"
+					})
+				});	
+				var markers = [conway_marker, eastside_marker, westside_marker, dayton_marker, payne_marker, northend_marker, frogtown_marker, summituniversity_marker, westseventh_marker, como_marker, midway_marker, stanthony_marker, unionpark_marker, macalester_marker, highland_marker, summithill_marker, capitol_marker];
+				
+				for(let i = 0; i < markers.length; i++){
+					markers[i].options.icon.options.html = crime_counts[i];
+					markers[i].bindPopup(markers[i].options.icon.options.name);
+					markers[i].addTo(map);
+				}
+            </script>
+		</div>
+		</div>
+        </body>
+    </html>
