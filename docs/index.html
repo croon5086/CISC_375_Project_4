@@ -37,12 +37,41 @@
 		            });
 		        }
 		    </script>	
+
             <style>
+            	/*https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy*/
+            	#crimeTableStyle {
+				  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+				  border-collapse: collapse;
+				  width: 100%;
+				}
+
+				#crimeTableStyle td, #crimeTableStyle th {
+				  border: 1px solid #ddd;
+				  padding: 8px;
+				}
+
+				#crimeTableStyle tr:nth-child(even){background-color: #f2f2f2;}
+
+				#crimeTableStyle tr:hover {background-color: #ddd;}
+
+				#crimeTableStyle th {
+				  padding-top: 12px;
+				  padding-bottom: 12px;
+				  text-align: left;
+				  background-color: #4CAF50;
+				  color: white;
+				}
                 #map {
-                    width: 900px;
-                    height:500px;
+                	height:500px;
+                 	width: auto;
+                    
+				  text-align: left;
+                   
                 }
             </style>
+            <!--  width: 900px;
+                    height:500px;-->
         </head>
 		<style>
 		.number-icon{
@@ -97,7 +126,7 @@
 					<li v-for="hoods in neighborhoods" v-if="isVisibleNeighborhood(hoods)">{{ hoods }}</li>
 				</ul>
 				
-			<table>
+			<table id="crimeTableStyle">
 				<thead>
 					<tr>
 						<th>Case Number</th>
