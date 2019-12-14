@@ -30,19 +30,16 @@
 			  display: table;
 			  clear: both;
 			}
-
-			/* Clear floats after the columns */
-			.row:after {
-			  content: "";
-			  display: table;
-			  clear: both;
-			}
 			img {
 			  height: 50%;
 			  width: 50%;
 			  display: block;
   			  margin-left: auto;
   			  margin-right: auto;
+			}
+			.centerInfo{
+			 margin: auto;
+  			 width: 50%;
 			}
 		</style>
 	</head>
@@ -58,54 +55,95 @@
 		</ul>
 	</nav>
 	<br>
+	<br>
+	<h1 align="center">ABOUT THE PROJECT</h1>
+	<br>
+	<br>
+	<br>
+	<br>
 		<div class="row">
 		  <div class="column" style="background-color:#aaa;">
 		  	<br>
-		    <h2 align="center">Andrew Bates</h2>
+		    <h1 align="center">Andrew Bates</h2>
 		    	<img width="96" height="65" src="https://media.licdn.com/dms/image/C4D03AQHZzNA-zGVWjw/profile-displayphoto-shrink_800_800/0?e=1581552000&v=beta&t=U6-jkKpGF2tMnsdbGd3VRvftrirLnpFohL5-k0QoX-s" alt="Image of Andrew Bates">
 		    	<br>
-		    <p align="center">
-		    	Bio: 
-			</p>
+		    <h5 align="center">
+		    	Andrew Bates is a senior at the University of St. Thomas where he is pursuing a Computer and Information Sciences major and a Business Administration minor.
+			</h5>
 		  </div>
 		  <div class="column" style="background-color:#bbb;">
 		  	<br>
-		    <h2 align="center">Charlie Rooney</h2>
+		    <h1 align="center">Charlie Rooney</h2>
 		    <img width="96" height="65" src="https://scontent.ffcm1-2.fna.fbcdn.net/v/t1.0-9/27459322_458304504566577_422204333559028686_n.jpg?_nc_cat=107&_nc_ohc=CGbY7SLnhc0AQloCzqMYJbeQfc5nZVCBXD9nU9xD2pvC32t1IFR3lMmKA&_nc_ht=scontent.ffcm1-2.fna&oh=765cdbc2898aef3f33c70f4bcccc5925&oe=5E75DC40" alt="Image of Charlie Rooney">
 		    <br>
-		     <p align="center">
-		    	Bio: 
-			</p>
+		     <h5 align="center">
+		    	Charlie Rooney is a senior at the University of St. Thomas where he is pursuing a Computer and Information Sciences major and a Catholic Studies Major.
+			</h5>
 		  </div>
 		</div>
-		<img src="">
-		<p> Description of the tools (frameworks, APIs, etc.) used to create the application</p>
-		<p> 
-			Leaflet:
+		
+		<div class="centerInfo">
 			<br>
-			The Leaflet API allows us to render the interactive map of St. Paul. Also it allowed us to overlay day on top of the map. The map was able to be modified by giving it coordinates and panning, and zooming.
 			<br>
-			Nominatim:
 			<br>
-			The Nominatim API allowed us to search for locations by name, and also retrieve a location's name based on lat/long coordinates.
-			<br>
-			St. Paul Crime:
-			<br>
-			This is the API you created for Part 1 of the project.
-		</p>
-		<p>Youtube video demonstration of application</p>
-		<p>embedded video</p>
-		<P>Six Interesting Findings</p>
-		<ol>
-		  <li>In the Month of October 2019 the Most crime infested neighbor hood is Capitol RIver with a total of 909 incidents reported which is almost double that of the second most...the Payne/Phalen neighborhood with 473.</li>
-		  <li>Out of all the crimes commited in Capitol River in th month of Cotober a whopping 274 out of the 909 incidents were chatergorized as Proactive Police Visits.</li>
-		  <li>Proactive Police visits were the most common incident type across the city in October 2019.</li>
-		  <li>Least common reasons in October 2019 for Police Visits were: 1) arson 2) grafiti 3) Rape</li>
-		  <li>Top three most common reasons in October 2019 for Police Visits were: 1) theft 2) vandalism 3)Narcotics.</li>
-		  <li>There is no recorded data in the used database for any homicides in St. Paul in October 2019. (In reality there were 3).</li>
-		  <li>In Union Park the most common incident in the whole database is theft. (St. Thomas is in Union Park and also Macalester-Groveland</li>
-		</ol>
-
-
+			<h4> Description of the tools (frameworks, APIs, etc.) used to create the application</h4>
+			<ul> 
+				<li>
+					Leaflet:
+					<br>
+					The Leaflet API allowed us to render the interactive map of St. Paul. Also it allowed us to overlay data on top of the map (markers for the neighborhoods). The map was able to be modified by giving it coordinates and panning, and zooming.
+					<br>
+				</li>
+				<li>
+					Nominatim:
+					<br>
+					The Nominatim API allowed us to search for locations by name, and also retrieve a location's name based on lat/long coordinates.
+					<br>
+				</li>
+				<li>
+					St. Paul Crime:
+					<br>
+					We used our St. Paul Crime api to request JSON data for incidents and neighborhoods.  Although we did not get the chance to fully implement a filtering feature for crimes and neighborhoods, our API can filter both
+					<br>
+				</li>
+				<li>
+					Bootstrap Framework:
+					<br>
+					Bootstrap Framework was used to keep all of the content within the div tags properly sized based on the window.
+					<br>
+				</li>
+				<li>
+					Vue.js
+					<br>
+					We stored the crime and neighbor hood data in an object that allowed us to dynamically display the data easier.
+				</li>
+			</ul>
+			<h4>Youtube Video Demonstration of Application</h4>
+			<p>embedded video</p>
+			<h4>Six Interesting Findings</h4>
+			<ol>
+			  <li>
+			  	In October 2019 the Most crime-infested neighborhood is Capitol River with a total of 909 incidents reported which is almost double that of the second most...the Payne/Phalen neighborhood with 473.
+			  </li>
+			  <li>
+				Out of all the crimes committed in Capitol River in October 2019, a whopping 274 out of the 909 incidents were categorized as Proactive Police Visits.
+			  </li>
+			  <li>
+				Proactive Police visits were the most common incident type across the city in October 2019.
+			  </li>
+			  <li>
+				Least common reasons in October 2019 for Police Visits were: 1) arson 2) graffiti 3) Rape.
+			  </li>
+			  <li>
+				The top three most common reasons in October 2019 for Police Visits were: 1) theft 2) vandalism 3)Narcotics.
+			  </li>
+			  <li>
+				There is no recorded data in the database for any homicides in St. Paul in October 2019. (In reality, there were 3).
+			  </li>
+			  <li>
+				In Union Park the most common incident in the whole database is theft. (St. Thomas is in Union Park and also Macalester-Groveland).
+			  </li>
+			</ol>
+		</div>
 	</body>
 </html>
