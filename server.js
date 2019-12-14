@@ -15,7 +15,7 @@ var public_dir = path.join(__dirname, 'public');
 var db_filename = path.join(__dirname, 'db', 'stpaul_crime.sqlite3');
 
 var app = express();
-var port = 8000;
+var port = process.argv[2];
 
 // open the database
 var db = new sqlite3.Database(db_filename, sqlite3.OPEN_READWRITE, (err) => {
