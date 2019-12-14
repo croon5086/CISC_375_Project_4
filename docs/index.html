@@ -14,7 +14,29 @@
 			<script type="application/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 			<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
-			
+		    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		    <script type="application/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		    <script type="application/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		    <!-- Prompt JavaScript - this can be moved to a separate .js file if desired -->
+		    <script type="application/javascript">
+		        function Prompt() {
+		            $("#dialog-form").dialog({
+		                autoOpen: true,
+		                modal: true,
+		                width: "360px",
+		                buttons: {
+		                    "Ok": function() {
+		                        var prompt_input = $("#prompt_input");
+		                        Init(prompt_input.val());
+		                        $(this).dialog("close");
+		                    },
+		                    "Cancel": function() {
+		                        $(this).dialog("close");
+		                    }
+		                }
+		            });
+		        }
+		    </script>	
             <style>
                 #map {
                     width: 900px;
@@ -36,7 +58,7 @@
 			font-size: 20px;
 		}
 		</style>
-        <body onload="Init()">
+        <body onload="Prompt()">
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 				<ul class="navbar-nav">
 					<li class="nav-item active">
@@ -47,7 +69,12 @@
 					</li>
 				</ul>
 			</nav>
-			
+			<!-- Prompt -->
+		    <div id="dialog-form">
+		        <label for="name">URL for St. Paul Crime API:</label>
+		        <input type="text" id="prompt_input" class="text ui-widget-content ui-corner-all" style="width: 320px;"/>
+		    </div>
+		    <!-- End: Prompt -->
 			<div class="container">
 			<div class="col-md-12">
 			<div id="map"></div>
@@ -223,16 +250,16 @@
 				var mapMarkers = [conway_marker, eastside_marker, westside_marker, dayton_marker, payne_marker, northend_marker, frogtown_marker, summituniversity_marker, westseventh_marker, como_marker, midway_marker, stanthony_marker, unionpark_marker, macalester_marker, highland_marker, summithill_marker, capitol_marker];
 
 
-				function Init() {
-					getNeighborhoods();
-					getCrimes();
+				function Init(crime_api_url) {
+					console.log(crime_api_url);
+					getNeighborhoods(crime_api_url);
+					getCrimes(crime_api_url);
 					vm.getMarkers();
-					vm.mapBounds = map.getBounds();
-					
+					vm.mapBounds = map.getBounds();					
 				}
 				
-				function getNeighborhoods() {
-					$.getJSON('http://localhost:8000/neighborhoods',
+				function getNeighborhoods(crime_api_url) {
+					$.getJSON(crime_api_url+'/neighborhoods',
 					function(obj)
 					{	
 						vm.neighborhoods = obj[0];
@@ -240,10 +267,10 @@
 					});
 				}
 				
-				function getCrimes() {
+				function getCrimes(crime_api_url) {
 					var start = "2019-10-01";
 					var end = "2019-10-31";
-					$.getJSON('http://localhost:8000/incidents?start_date=' + start + '&end_date=' + end,
+					$.getJSON(crime_api_url+'/incidents?start_date=' + start + '&end_date=' + end,
 					function(obj)
 					{
 						for(key in obj[0]){	
