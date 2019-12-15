@@ -20,7 +20,9 @@
 		    <!-- Prompt JavaScript - this can be moved to a separate .js file if desired -->
 		    <script type="application/javascript">
 		        function Prompt() {
-		            $("#dialog-form").dialog({
+		            $("#dialog-form").dialog(event,{
+		                
+
 		                autoOpen: true,
 		                modal: true,
 		                width: "360px",
@@ -36,7 +38,7 @@
 		                }
 		            });
 		        }
-		    </script>
+               </script>
             <style>
             	/*https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy  Help with table style design code*/
             	#crimeTableStyle {
@@ -153,22 +155,38 @@
 			Select Specific Incidents to View:
 			<br>
 			&nbsp&nbspProactive Police Visit: <input type="checkbox" id="Proactive Police Visit" name="PPV" value="&code=9954" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspVandalism: <input type="checkbox" id="Vandalism" name="VAN" value="&code=1400" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspVandalism: <input type="checkbox" id="Vandalism" name="VAN" value="&code=1400,1410,1420,1430" onchange="incidentsIncludeCheckBox()">
+
 			&nbsp&nbspDischarge: <input type="checkbox" id="Discharge" name="DIS" value="&code=2619" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspAuto Theft: <input type="checkbox" id="Auto Theft" name="AUT" value="&code=710" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspTheft: <input type="checkbox" id="Theft" name="THE" value="&code=600" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspSimple Asasult Dom.: <input type="checkbox" id="Simple Asasult Dom." name="SAD" value="&code=861" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspNarcotics: <input type="checkbox" id="Narcotics" name="NAR" value="&code=1800" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspBurglary: <input type="checkbox" id="Burglary" name="BUR" value="&code=523" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspAgg. Assault: <input type="checkbox" id="Agg. Assault" name="AGG" value="&code=410" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspRobbery: <input type="checkbox" id="Robbery" name="ROB" value="&code=311" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspAuto Theft: <input type="checkbox" id="Auto Theft" name="AUT" value="&code=700,710,711,712,720,721,722" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspTheft: <input type="checkbox" id="Theft" name="THE" value="&code=600,603,611,612,613,614,621,622,623,630,631,632,633,640,641,642,643,651,652,653,661,662,663,671,672,673,681,693" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspSimple Asasult Dom.: <input type="checkbox" id="Simple Asasult Dom." name="SAD" value="&code=810,861,862,863" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspNarcotics: <input type="checkbox" id="Narcotics" name="NAR" value="&code=1800,1810,1811,1812,1813,1814,1815,1820,1822,1823,1824,1825,1830,1835,1840,1841,1842,1843,1845,1850,1855,1865,1870,1880,1885" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspBurglary: <input type="checkbox" id="Burglary" name="BUR" value="&code=500,510,511,513,515,516,520,521,523,525,526,530,531,533,535,536,540,541,543,545,546,50,551,553,555,5565,560,561,563,565,566" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspAgg. Assault: <input type="checkbox" id="Agg. Assault" name="AGG" value="&code=400,410,411,412,420,421,422,430,431,432,440,441,442,450,451,452,453" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspRobbery: <input type="checkbox" id="Robbery" name="ROB" value="&code=300,311,312,313,314,321,322,323,324,331,333,334,341,342,343,344,351,352,353,354,361,363,364,371,372,373,374" onchange="incidentsIncludeCheckBox()">
+
 			&nbsp&nbspAgg. Assault Dom.: <input type="checkbox" id="Agg. Assault Dom." name="" value="&code=411" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspRape: <input type="checkbox" id="Rape" name="RAP" value="&code=210" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspGraffiti: <input type="checkbox" id="Graffiti" name="GRA" value="&code=1401" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspArson: <input type="checkbox" id="Arson" name="ARS" value="&code=900" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspRape: <input type="checkbox" id="Rape" name="RAP" value="&code=210&220" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspGraffiti: <input type="checkbox" id="Graffiti" name="GRA" value="&code=1401,1415,1416,1425,1426,1435,1436" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspArson: <input type="checkbox" id="Arson" name="ARS" value="&code=900,901,903,905,911,913,915,921,923,931,933,941,942,951,961,971,972,981,982" onchange="incidentsIncludeCheckBox()">
+
 			&nbsp&nbspCommunity Engagement Event: <input type="checkbox" id="Community Engagement Event" name="CEE" value="&code=9959" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspHomicide: <input type="checkbox" id="Homicide" name="HOM" value="&id=110" onchange="incidentsIncludeCheckBox()">
-			&nbsp&nbspOther: <input type="checkbox" id="Other" name="OTH" value="&id=614" onchange="incidentsIncludeCheckBox()">-->
+
+			&nbsp&nbspHomicide: <input type="checkbox" id="Homicide" name="HOM" value="&code=110,120" onchange="incidentsIncludeCheckBox()">
+
+			&nbsp&nbspOther: <input type="checkbox" id="Other" name="OTH" value="&code=2619" onchange="incidentsIncludeCheckBox()">-->
 			<table id="crimeTableStyle">
 				<thead>
 					<tr>
