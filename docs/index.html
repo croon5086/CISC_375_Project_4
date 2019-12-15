@@ -115,7 +115,6 @@
             <br>
             <input type="radio" id ="Gaddres" name="locType" value="address" onclick="radioClick()" checked> Address &nbsp
 			<input type="radio" id ="Glatlng"name="locType" value="latlong" onclick="radioClick()"> Latitude/Longitude<br>
-            <p id="location"></p>
 			<br>
 			<br>
 			<div id="app">
@@ -127,6 +126,27 @@
 			<br>
 			Start Date: <input type="datetime-local" id="tableStart" value="2019-10-01T00:00" onchange="timeChange()">
 			End Date: <input type="datetime-local" id="tableEnd" value="2019-10-31T00:00" onchange="timeChange()">
+			<br>
+			<br>
+			Select Specific Neighboorhoods to View:
+			<br>
+			Capitol River: <input type="checkbox" id="Capitol River" name="CR" value="&id=17" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspSummit Hill: <input type="checkbox" id="Summit Hill" name="SH" value="&id=16" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspHighland: <input type="checkbox" id="Highland" name="H" value="&id=15" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspMacalester-Groveland: <input type="checkbox" id="Macalester-Groveland" name="MG" value="&id=14" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspUnion Park: <input type="checkbox" id="Union Park" name="UP" value="&id=13" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspSt. Anthony: <input type="checkbox" id="St. Anthony" name="SA" value="&id=12" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspHamline/Midway: <input type="checkbox" id="Hamline/Midway" name="HM" value="&id=11" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspComo: <input type="checkbox" id="Como" name="C" value="&id=10" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspWest Seventh: <input type="checkbox" id="West Seventh" name="WS" value="&id=9" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspSummit/University: <input type="checkbox" id="Summit/University" name="SU" value="&id=8" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspThomas/Dale(Frogtown): <input type="checkbox" id="Thomas/Dale(Frogtown)" name="TD" value="&id=7" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspNorth End: <input type="checkbox" id="North End" name="NE" value="&id=6" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspPayne/Phalen: <input type="checkbox" id="Payne/Phalen" name="PP" value="&id=5" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspDayton's Bluff: <input type="checkbox" id="Daytons Bluff" name="DB" value="&id=4" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspWest Side: <input type="checkbox" id="West Side" name="WSS" value="&id=3" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspGreater East Side: <input type="checkbox" id="Greater East Side" name="GES" value="&id=2" onchange="neighborIncludeCheckBox()">
+			&nbsp&nbspConway/Battlecreek/Highwood: <input type="checkbox" id="Conway/Battlecreek/Highwood" name="CBH" value="&id=1" onchange="neighborIncludeCheckBox()">
 			<br>
 			<br>
 			<br>
@@ -311,7 +331,7 @@
 				function getCrimes(crime_api_url) {
 					//var start = "2019-10-01";
 					//var end = "2019-10-31";
-					$.getJSON(crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime,
+					$.getJSON(crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime + vm.neighborhoodsInclude,
 					function(obj)
 					{
 						for(key in obj[0]){	
@@ -328,6 +348,80 @@
 					vm.endTime = document.getElementById("tableEnd").value;
 					getCrimes(vm.crimeapi);
 				}
+
+				function neighborIncludeCheckBox(){
+					vm.neighborhoodsInclude="";
+					if(document.getElementById('Conway/Battlecreek/Highwood').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Conway/Battlecreek/Highwood').value
+					}
+					if(document.getElementById('Greater East Side').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Greater East Side').value
+					}
+					if(document.getElementById('West Side').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Side').value
+					}
+					if(document.getElementById('Daytons Bluff').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Daytons Bluff').value
+					}
+					if(document.getElementById('Payne/Phalen').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Payne/Phalen').value
+					}
+					if(document.getElementById('North End').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('North End').value
+					}
+					if(document.getElementById('Thomas/Dale(Frogtown)').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Thomas/Dale(Frogtown)').value
+					}
+					if(document.getElementById('West Seventh').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Seventh').value
+					}
+					if(document.getElementById('Summit/University').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit/University').value
+					}
+					if(document.getElementById('Como').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Como').value
+					}
+					if(document.getElementById('St. Anthony').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('St. Anthony').value
+					}
+					if(document.getElementById('Hamline/Midway').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Hamline/Midway').value
+					}
+					if(document.getElementById('Union Park').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Union Park').value
+					}
+					if(document.getElementById('Macalester-Groveland').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Macalester-Groveland').value
+					}
+					if(document.getElementById('Highland').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Highland').value
+					}
+					if(document.getElementById('Summit Hill').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit Hill').value
+					}
+					if(document.getElementById('Capitol River').checked)
+					{
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Capitol River').value
+					}
+					getCrimes(vm.crimeapi);
+					console.log(vm.crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime + vm.neighborhoodsInclude);
+				}
 				
 			
 				var vm = new Vue({
@@ -340,12 +434,13 @@
 						crimesInBounds: {},
 						crimeapi: "",
 						startTime: "2019-10-01",
-						endTime: "2019-10-31"
+						endTime: "2019-10-31",
+						neighborhoodsInclude: ""
 					},
 					methods: {
 						getMarkers: function() {
 							for(let i = 0; i < mapMarkers.length; i++){
-								mapMarkers[i].options.icon.options.html = 45;
+								mapMarkers[i].options.icon.options.html = 100;
 								mapMarkers[i].bindPopup(mapMarkers[i].options.icon.options.name);
 								mapMarkers[i].addTo(map);
 							}
