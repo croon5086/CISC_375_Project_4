@@ -150,6 +150,25 @@
 			<br>
 			<br>
 			<br>
+			Select Specific Incidents to View:
+			<br>
+			&nbsp&nbspProactive Police Visit: <input type="checkbox" id="Proactive Police Visit" name="PPV" value="&code=9954" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspVandalism: <input type="checkbox" id="Vandalism" name="VAN" value="&code=1400" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspDischarge: <input type="checkbox" id="Discharge" name="DIS" value="&code=2619" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspAuto Theft: <input type="checkbox" id="Auto Theft" name="AUT" value="&code=710" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspTheft: <input type="checkbox" id="Theft" name="THE" value="&code=600" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspSimple Asasult Dom.: <input type="checkbox" id="Simple Asasult Dom." name="SAD" value="&code=861" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspNarcotics: <input type="checkbox" id="Narcotics" name="NAR" value="&code=1800" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspBurglary: <input type="checkbox" id="Burglary" name="BUR" value="&code=523" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspAgg. Assault: <input type="checkbox" id="Agg. Assault" name="AGG" value="&code=410" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspRobbery: <input type="checkbox" id="Robbery" name="ROB" value="&code=311" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspAgg. Assault Dom.: <input type="checkbox" id="Agg. Assault Dom." name="" value="&code=411" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspRape: <input type="checkbox" id="Rape" name="RAP" value="&code=210" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspGraffiti: <input type="checkbox" id="Graffiti" name="GRA" value="&code=1401" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspArson: <input type="checkbox" id="Arson" name="ARS" value="&code=900" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspCommunity Engagement Event: <input type="checkbox" id="Community Engagement Event" name="CEE" value="&code=9959" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspHomicide: <input type="checkbox" id="Homicide" name="HOM" value="&id=110" onchange="incidentsIncludeCheckBox()">
+			&nbsp&nbspOther: <input type="checkbox" id="Other" name="OTH" value="&id=614" onchange="incidentsIncludeCheckBox()">-->
 			<table id="crimeTableStyle">
 				<thead>
 					<tr>
@@ -331,7 +350,7 @@
 				function getCrimes(crime_api_url) {
 					//var start = "2019-10-01";
 					//var end = "2019-10-31";
-					$.getJSON(crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime + vm.neighborhoodsInclude,
+					$.getJSON(crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime + vm.incidentsInclude + vm.neighborhoodsInclude ,
 					function(obj)
 					{
 						for(key in obj[0]){	
@@ -348,79 +367,155 @@
 					vm.endTime = document.getElementById("tableEnd").value;
 					getCrimes(vm.crimeapi);
 				}
+				
+				function incidentsIncludeCheckBox() {
+					vm.incidentsInclude="";
+					
+					
+					if(document.getElementById('Proactive Police Visit').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Proactive Police Visit').value;
+					}
+					if(document.getElementById('Vandalism').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Vandalism').value;
+					}
+					if(document.getElementById('Discharge').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Discharge').value;
+					}
+					if(document.getElementById('Auto Theft').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Auto Theft').value;
+					}
+					if(document.getElementById('Theft').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Theft').value;
+					}
+					if(document.getElementById('Simple Asasult Dom.').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Simple Asasult Dom.').value;
+					}
+					if(document.getElementById('Narcotics').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Narcotics').value;
+					}
+					if(document.getElementById('Burglary').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Burglary').value;
+					}
+					if(document.getElementById('Agg. Assault').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Agg. Assault').value;
+					}
+					if(document.getElementById('Robbery').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Robbery').value;
+					}
+					if(document.getElementById('Agg. Assault Dom.').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Agg. Assault Dom.').value;
+					}
+					if(document.getElementById('Rape').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Rape').value;
+					}
+					if(document.getElementById('Graffiti').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Graffiti').value;
+					}
+					if(document.getElementById('Arson').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Arson').value;
+					}
+					if(document.getElementById('Community Engagement Event').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Community Engagement Event').value;
+					}
+					if(document.getElementById('Homicide').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Homicide').value;
+					}
+					if(document.getElementById('Other').checked)
+					{
+						vm.incidentsInclude=vm.incidentsInclude + document.getElementById('Other').value;
+					}
+					getCrimes(vm.crimeapi);
+					
+					
+				}
 
 				function neighborIncludeCheckBox(){
 					vm.neighborhoodsInclude="";
 					if(document.getElementById('Conway/Battlecreek/Highwood').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Conway/Battlecreek/Highwood').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Conway/Battlecreek/Highwood').value;
 					}
 					if(document.getElementById('Greater East Side').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Greater East Side').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Greater East Side').value;
 					}
 					if(document.getElementById('West Side').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Side').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Side').value;
 					}
 					if(document.getElementById('Daytons Bluff').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Daytons Bluff').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Daytons Bluff').value;
 					}
 					if(document.getElementById('Payne/Phalen').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Payne/Phalen').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Payne/Phalen').value;
 					}
 					if(document.getElementById('North End').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('North End').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('North End').value;
 					}
 					if(document.getElementById('Thomas/Dale(Frogtown)').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Thomas/Dale(Frogtown)').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Thomas/Dale(Frogtown)').value;
 					}
 					if(document.getElementById('West Seventh').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Seventh').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('West Seventh').value;
 					}
 					if(document.getElementById('Summit/University').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit/University').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit/University').value;
 					}
 					if(document.getElementById('Como').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Como').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Como').value;
 					}
 					if(document.getElementById('St. Anthony').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('St. Anthony').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('St. Anthony').value;
 					}
 					if(document.getElementById('Hamline/Midway').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Hamline/Midway').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Hamline/Midway').value;
 					}
 					if(document.getElementById('Union Park').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Union Park').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Union Park').value;
 					}
 					if(document.getElementById('Macalester-Groveland').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Macalester-Groveland').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Macalester-Groveland').value;
 					}
 					if(document.getElementById('Highland').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Highland').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Highland').value;
 					}
 					if(document.getElementById('Summit Hill').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit Hill').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Summit Hill').value;
 					}
 					if(document.getElementById('Capitol River').checked)
 					{
-						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Capitol River').value
+						vm.neighborhoodsInclude=vm.neighborhoodsInclude+document.getElementById('Capitol River').value;
 					}
 					getCrimes(vm.crimeapi);
-					console.log(vm.crime_api_url+'/incidents?start_date=' + vm.startTime + '&end_date=' + vm.endTime + vm.neighborhoodsInclude);
 				}
 				
 			
@@ -435,7 +530,8 @@
 						crimeapi: "",
 						startTime: "2019-10-01",
 						endTime: "2019-10-31",
-						neighborhoodsInclude: ""
+						neighborhoodsInclude: "",
+						incidentsInclude: ""
 					},
 					methods: {
 						getMarkers: function() {
